@@ -9,6 +9,8 @@ import Modal from "react-modal";
 import "./Calendar.css";
 
 const Calendar = () => {
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
   const [selectedDateEvents, setSelectedDateEvents] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -28,13 +30,11 @@ const Calendar = () => {
   };
 
   const handleEventClick = (info) => {
-    info.jsEvent.preventDefault(); // グーグルカレンダーに飛ばないようにする
-    // クリックされたイベントの日付に移動
-    // info.view.calendar.gotoDate(info.event.start);
-    // dayビューに変更
-    // info.view.calendar.changeView("timeGridDay");
+    info.jsEvent.preventDefault();
+    const rect = info.jsEvent.currentTarget.getBoundingClientRect();
+    setPopupPosition({ x: rect.left, y: rect.top });
     setSelectedEvent(info.event);
-    setModalIsOpen(true);
+    setShowPopup(true);
   };
 
   const getEventColor = (eventTitle) => {
@@ -91,62 +91,28 @@ const Calendar = () => {
         scrollTime="00:00:00"
         allDaySlot={false}
       />
-      {/* {selectedEvent && (
-        // <Modal
-        //   isOpen={modalIsOpen}
-        //   onRequestClose={() => setModalIsOpen(false)}
-        //   contentLabel="Event Details"
-        //   style={{
-        //     overlay: {
-        //       pointerEvents: "none",
-        //     },
-        //     content: {
-        //       zIndex: -11,
-        //       pointerEvents: "auto",
-        //       top: "50%",
-        //       left: "50%",
-        //       right: "auto",
-        //       bottom: "auto",
-        //       transform: "translate(-50%, -50%)",
-        //       padding: "20px",
-        //       backgroundColor: selectedEvent
-        //         ? getEventColor(selectedEvent.title).backgroundColor
-        //         : "white", // ポップアップの背景色をイベントの色に設定
-        //       color: selectedEvent
-        //         ? getEventColor(selectedEvent.title).textColor
-        //         : "black", // ポップアップの文字色をイベントの文字色に設定
-        //       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // 影を追加
-        //       border: "none",
-        //       borderRadius: "8px",
-        //       overflowY: "auto", // コンテンツが多い場合にスクロール可能にする
-        //     },
-        //   }}
-        // >
-        //   <div onClick={(e) => e.stopPropagation()}>
-        //     <h2>{selectedEvent.title}</h2>
-        //     <p>{selectedEvent.extendedProps.description}</p>
-        //     <button
-        //       onClick={() => setModalIsOpen(false)}
-        //       style={{
-        //         position: "absolute",
-        //         top: "10px",
-        //         right: "10px",
-        //         background: "red",
-        //         color: "white",
-        //         border: "none",
-        //         borderRadius: "50%",
-        //         width: "30px",
-        //         height: "30px",
-        //         textAlign: "center",
-        //         lineHeight: "30px",
-        //         cursor: "pointer",
-        //       }}
-        //     >
-        //       閉
-        //     </button>
-        //   </div>
-        // </Modal>
-      )} */}
+      {showPopup && selectedEvent && (
+        <div
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            zIndex: 1000,
+            backgroundColor: "white",
+            border: "1px solid black",
+            padding: "10px",
+            transform: "translate(-50%, -50%)",
+            maxHeight: "80vh", // 画面の高さの80%を最大高さとして設定
+            overflowY: "auto", // 縦方向のオーバーフローをスクロールに設定
+            width: "80%", // 幅も80%に設定して、内容が折り返されるようにします
+            boxSizing: "border-box", // paddingとborderを含めてサイズを計算
+          }}
+        >
+          <h2>{selectedEvent.title}</h2>
+          <p>{selectedEvent.extendedProps.description}</p>
+          <button onClick={() => setShowPopup(false)}>閉じる</button>
+        </div>
+      )}
     </div>
   );
 };

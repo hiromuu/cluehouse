@@ -16,7 +16,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "react/clubhouse-calendar/public",
+    "public": "react/clubhouse-calendar/build",
     "ignore": [
       "firebase.json",
       "**/.*",
