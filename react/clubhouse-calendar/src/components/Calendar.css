@@ -1,0 +1,77 @@
+@media (max-width: 768px) {
+  .calendar-container {
+    justify-content: flex-end;
+    padding-bottom: 20px;
+    width: 92%;
+    /* 横幅を84%に設定 */
+    margin: 0 auto;
+    /* 上下のマージンを0、左右のマージンを自動に設定 */
+    padding-left: 4%;
+    /* 左のパディングを8%に設定 */
+    padding-right: 4%;
+    /* 右のパディングを8%に設定 */
+    /* 画面の下の方にカレンダーを表示するためのパディング */
+  }
+
+  /* カレンダーのヘッダーのスタイルを調整 */
+  .fc-header-toolbar {
+    flex-direction: column !important;
+  }
+
+  .fc-toolbar-chunk {
+    margin-bottom: 10px !important;
+  }
+}
+
+.calendar-container {
+  width: 84%; /* 横幅を84%に設定 */
+  margin: 0 auto; /* 上下のマージンを0、左右のマージンを自動に設定 */
+  padding-left: 8%; /* 左のパディングを8%に設定 */
+  padding-right: 8%; /* 右のパディングを8%に設定 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+}
+
+.button-container {
+  margin-bottom: 20px;
+}
+
+.calendar-button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.calendar-iframe {
+  overflow-x: auto; /* 横スクロールを可能にする */
+}
+
+@media (max-width: 768px) {
+  .calendar-iframe {
+    width: 80%;
+  }
+}
+
+.fc-timeGridDay-view .fc-timegrid {
+  height: 80%; /* ここで高さを調整 */
+  width: 80%; /* ここで幅を調整 */
+  margin: 0 auto; /* 中央寄せ */
+}
+
+/* weekビューの高さと幅を調整 */
+.fc-timeGridWeek-view .fc-timegrid {
+  height: 80%; /* ここで高さを調整 */
+  width: 80%; /* ここで幅を調整 */
+  margin: 0 auto; /* 中央寄せ */
+}
+
+.fc-event-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+  /* またはお好みの幅に設定 */
+}
